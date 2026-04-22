@@ -315,6 +315,7 @@ installWithAptss install firmware-iwlwifi firmware-realtek -y
 installWithAptss install firmware-atheros -y
 installWithAptss install firmware-ath9k-htc -y
 installWithAptss install firmware-sof-signed -y
+installWithAptss install firmware-brcm80211 -y
 installWithAptss install grub-common -y
 if [[ $1 == mips64el ]]; then
     installWithAptss install xserver-xorg-video-loongson -y
