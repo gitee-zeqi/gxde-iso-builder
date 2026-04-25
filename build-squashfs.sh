@@ -283,22 +283,9 @@ fi
 # 卸载无用应用
 installWithAptss purge  mlterm mlterm-tiny deepin-terminal-gtk deepin-terminal ibus systemsettings deepin-wine8-stable breeze-* mpv ghostty -y
 # 安装内核
-if [[ $1 != amd64 ]]; then
-    installWithAptss autopurge "linux-image-*" "linux-headers-*" -y
-fi
+installWithAptss autopurge "linux-image-*" "linux-headers-*" -y
 installWithAptss install linux-kernel-gxde-$1 -y
-# 如果为 amd64/i386 则同时安装 oldstable 内核
-if [[ $1 == amd64 ]] || [[ $1 == i386 ]] || [[ $1 == mips64el ]]; then
-    installWithAptss install linux-kernel-oldstable-gxde-$1 -y
-fi
-if [[ $2 == hetao ]]; then
-    # 安装 HWE 内核
-    installWithAptss install linux-kernel-hwe-gxde-$1 -y
-else
-    if [[ $1 == arm64 ]]; then
-        installWithAptss install linux-kernel-phytium-gxde-arm64 -y
-    fi
-fi
+installWithAptss install linux-kernel-oldstable-gxde-$1 -y
 
 # 禁用 nmbd
 chrootCommand systemctl disable nmbd
