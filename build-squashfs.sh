@@ -284,6 +284,9 @@ fi
 installWithAptss purge  mlterm mlterm-tiny deepin-terminal-gtk -y
 installWithAptss purge deepin-terminal ibus systemsettings -y
 installWithAptss purge deepin-wine8-stable breeze-* mpv ghostty -y
+# 删除交叉构建时错误生成的内核文件
+sudo rm -fv $debianRootfsPath/boot/vmlinuz-* 
+sudo rm -fv $debianRootfsPath/boot/initrd.img-* 
 # 安装内核
 installWithAptss autopurge "linux-image-*" "linux-headers-*" -y
 installWithAptss install linux-kernel-gxde-$1 -y
