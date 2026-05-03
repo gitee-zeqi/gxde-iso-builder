@@ -281,7 +281,9 @@ fi
 #    chrootCommand /usr/bin/apt install grub-efi-$1 -y
 #fi
 # 卸载无用应用
-installWithAptss purge  mlterm mlterm-tiny deepin-terminal-gtk deepin-terminal ibus systemsettings deepin-wine8-stable breeze-* mpv ghostty -y
+installWithAptss purge  mlterm mlterm-tiny deepin-terminal-gtk -y
+installWithAptss purge deepin-terminal ibus systemsettings -y
+installWithAptss purge deepin-wine8-stable breeze-* mpv ghostty -y
 # 安装内核
 installWithAptss autopurge "linux-image-*" "linux-headers-*" -y
 installWithAptss install linux-kernel-gxde-$1 -y
