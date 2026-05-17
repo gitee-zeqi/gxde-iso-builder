@@ -302,12 +302,14 @@ if [[ $2 == hetao ]]; then
     fi
 else
     installWithAptss install firmware-linux -y
+    installWithAptss install firmware-linux-nonfree -y
 fi
 installWithAptss install firmware-iwlwifi firmware-realtek -y
 installWithAptss install firmware-atheros -y
 installWithAptss install firmware-ath9k-htc -y
 installWithAptss install firmware-sof-signed -y
 installWithAptss install firmware-brcm80211 -y
+installWithAptss install firmware-mediatek -y
 installWithAptss install grub-common -y
 if [[ $1 == mips64el ]]; then
     installWithAptss install xserver-xorg-video-loongson -y
