@@ -252,9 +252,9 @@ if [[ $1 == loong64 ]]; then
     installWithAptss install spark-store -y
     chrootCommand aptss update -o Acquire::Check-Valid-Until=false
     if [[ $2 == hetao ]]; then
-        installWithAptss install firefox firefox-l10n-zh-cn -y
+        installWithAptss install firefox firefox-l10n-all -y
     else
-        installWithAptss install firefox-esr firefox-esr-l10n-zh-cn -y
+        installWithAptss install firefox-esr firefox-esr-l10n-all -y
     fi
 elif [[ $1 == amd64 ]]; then
     installWithAptss install spark-store -y
@@ -272,16 +272,16 @@ elif [[ $1 == arm64 ]]; then
     installWithAptss install dummyapp-wps-office dummyapp-spark-deepin-wine-runner -y
 elif [[ $1 == "mips64el" ]]; then
     installWithAptss install loongsonapplication -y
-    installWithAptss install firefox-esr firefox-esr-l10n-zh-cn -y
+    installWithAptss install firefox-esr firefox-esr-l10n-all -y
 elif [[ $1 == "i386" ]]; then
     installWithAptss install aptss -y
     installWithAptss update -o Acquire::Check-Valid-Until=false
-    installWithAptss install firefox-esr firefox-esr-l10n-zh-cn -y
+    installWithAptss install firefox-esr firefox-esr-l10n-all -y
     installWithAptss install boot-repair -y
 else 
     installWithAptss install aptss -y
     installWithAptss update -o Acquire::Check-Valid-Until=false
-    installWithAptss install firefox-esr firefox-esr-l10n-zh-cn -y
+    installWithAptss install firefox-esr firefox-esr-l10n-all -y
 fi
 #if [[ $1 == arm64 ]] || [[ $1 == loong64 ]]; then
 #    installWithAptss install spark-box64 -y
