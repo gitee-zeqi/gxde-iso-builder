@@ -35,17 +35,11 @@ function UNMount() {
     sudo umount "$1/tmp"
 }
 function buildDebianRootf() {
-    if [[ $1 == loong64 ]]; then
+    if [[ $1 == loong64 ]] && [[ $2 == "trixie" ]]; then
         sudo debootstrap --no-check-gpg --keyring=/usr/share/keyrings/debian-ports-archive-keyring.gpg \
             --include=debian-ports-archive-keyring,debian-archive-keyring,sudo,vim \
-            --arch $1 unstable $debianRootfsPath https://mirrors.nju.edu.cn/debian-ports/
-        if [[ $? != 0 ]]; then
-            sudo /usr/bin/apt install squashfs-tools git aria2 -y
-            aria2c -x 16 -s 16 https://repo.gxde.top/TGZ/debian-base-loong64/debian-base-loong64.squashfs
-            sudo unsquashfs debian-base-loong64.squashfs
-            sudo rm -rf $debianRootfsPath/
-            sudo mv squashfs-root $debianRootfsPath -v
-        fi
+            --arch $1 $2 $debianRootfsPath https://loong13.debian.net/debian/
+        sudo wget -O $debianRootfsPath/etc/apt/trusted.gpg.d/debian-trixie-loong64.gpg https://loong13.debian.net/keyrings/debian-trixie-loong64.gpg
     else
         if [[ $1 == "mips64el" ]] && [[ $2 == "trixie" ]]; then
             sudo debootstrap --no-check-gpg --arch $1 \
@@ -101,13 +95,25 @@ case $2 in
         if [[ $1 == "mips64el" ]]; then
             sudo cp $programPath/gxde-temp-lizhi-system-mips64el.list $debianRootfsPath/etc/apt/sources.list.d/temp-system.list -v
         else
-            sudo cp $programPath/gxde-temp-lizhi-system.list $debianRootfsPath/etc/apt/sources.list.d/temp-system.list -v
+            if [[ $1 == loong64 ]]; then
+                sudo cp $programPath/gxde-temp-lizhi-system-loong64.list $debianRootfsPath/etc/apt/sources.list.d/temp-system.list -v
+            else
+                sudo cp $programPath/gxde-temp-lizhi-system.list $debianRootfsPath/etc/apt/sources.list.d/temp-system.list -v
+            fi
         fi
     ;;
     "zhuangzhuang")
         buildDebianRootf $1 trixie
         sudo cp $programPath/gxde-temp-lizhi.list $debianRootfsPath/etc/apt/sources.list.d/temp.list -v
-        sudo cp $programPath/gxde-temp-lizhi-system.list $debianRootfsPath/etc/apt/sources.list.d/temp-system.list -v
+        if [[ $1 == "mips64el" ]]; then
+            sudo cp $programPath/gxde-temp-lizhi-system-mips64el.list $debianRootfsPath/etc/apt/sources.list.d/temp-system.list -v
+        else
+            if [[ $1 == loong64 ]]; then
+                sudo cp $programPath/gxde-temp-lizhi-system-loong64.list $debianRootfsPath/etc/apt/sources.list.d/temp-system.list -v
+            else
+                sudo cp $programPath/gxde-temp-lizhi-system.list $debianRootfsPath/etc/apt/sources.list.d/temp-system.list -v
+            fi
+        fi
     ;;
     "meimei")
         if [[ ! -e /usr/share/debootstrap/scripts/loongnix-stable ]]; then
