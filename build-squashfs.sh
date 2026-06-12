@@ -251,7 +251,11 @@ installWithAptss install linglong-bin linglong-box -y
 if [[ $1 == loong64 ]]; then
     installWithAptss install spark-store -y
     chrootCommand aptss update -o Acquire::Check-Valid-Until=false
-    chrootCommand aptss install cn.loongnix.lbrowser -y
+    if [[ $2 == hetao ]]; then
+        installWithAptss install firefox firefox-l10n-zh-cn -y
+    else
+        installWithAptss install firefox-esr firefox-esr-l10n-zh-cn -y
+    fi
 elif [[ $1 == amd64 ]]; then
     installWithAptss install spark-store -y
     chrootCommand aptss update -o Acquire::Check-Valid-Until=false
