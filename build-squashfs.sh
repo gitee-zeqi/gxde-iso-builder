@@ -333,6 +333,8 @@ chrootCommand /usr/bin/apt install grub-pc --download-only -y
 chrootCommand /usr/bin/apt install grub-efi-$1 --download-only -y
 chrootCommand /usr/bin/apt install grub-efi --download-only -y
 chrootCommand /usr/bin/apt install grub-common --download-only -y
+chrootCommand /usr/bin/apt install dde-store --download-only -y
+chrootCommand /usr/bin/apt install aptss --download-only -y
 chrootCommand /usr/bin/apt install cryptsetup-initramfs cryptsetup keyutils --download-only -y
 
 
