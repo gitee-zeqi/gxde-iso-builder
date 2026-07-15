@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     # 宿主必须是 Ubuntu（GitHub 强制），但仅作为硬件驱动层
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     
     # 核心：将整个作业环境切换为 Debian 13 (Trixie) 容器
     container:
