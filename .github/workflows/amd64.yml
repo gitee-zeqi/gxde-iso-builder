@@ -31,7 +31,7 @@ jobs:
         run: |
           apt-get update
           apt-get install -y debootstrap qemu-user-static genisoimage \
-            xorriso squashfs-tools binfmt-support systemd-container
+            xorriso squashfs-tools binfmt-support systemd-container python3
 
       # 启用跨架构支持（如果需要构建 arm64/mips64el 等）
       - name: Enable binfmt
