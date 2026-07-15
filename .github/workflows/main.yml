@@ -1,0 +1,49 @@
+name: Build ISO for arm64 (Pure Debian 13)
+
+on:
+  push:
+    tags:
+      - 'v*-arm64'          # 触发条件
+
+jobs:
+  build:
+    # 宿主必须是 Ubuntu（GitHub 强制），但仅作为硬件驱动层
+    runs-on: ubuntu-latest
+    
+    # 核心：将整个作业环境切换为 Debian 13 (Trixie) 容器
+    container:
+      image: debian:trixie
+      options: --privileged  # 赋予 chroot 和挂载权限
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 关键技巧：因为容器内是 root 用户，直接删掉脚本里所有的 "sudo "，
+      # 这样脚本就在纯 root 权限下运行，不会再有任何 sudo 报错。
+      - name: Prepare build script (remove sudo)
+        run: |
+          sed -i 's/sudo //g' ./build-squashfs.sh
+          chmod +x ./build-squashfs.sh
+
+      # 安装依赖（完全使用 Debian 13 的源）
+      - name: Install dependencies (Debian 13)
+        run: |
+          apt-get update
+          apt-get install -y debootstrap qemu-user-static genisoimage \
+            xorriso squashfs-tools binfmt-support systemd-container python3
+
+      # 启用跨架构支持（如果需要构建 arm64/mips64el 等）
+      - name: Enable binfmt
+        run: update-binfmts --enable
+
+      # 执行构建（此时系统是 Debian 13，用户是 root）
+      - name: Build ISO
+        run: ./build-squashfs.sh arm64 hetao
+
+      # 上传产物
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gxde-arm64-hetao
+          path: gxde.iso
