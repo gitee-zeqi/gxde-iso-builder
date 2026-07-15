@@ -23,8 +23,8 @@ jobs:
       # 这样脚本就在纯 root 权限下运行，不会再有任何 sudo 报错。
       - name: Prepare build script (remove sudo)
         run: |
-          sed -i 's/sudo //g' build-squashfs.sh
-          chmod +x build-squashfs.sh
+          sed -i 's/sudo //g' ./build-squashfs.sh
+          chmod +x ./build-squashfs.sh
 
       # 安装依赖（完全使用 Debian 13 的源）
       - name: Install dependencies (Debian 13)
@@ -39,11 +39,11 @@ jobs:
 
       # 执行构建（此时系统是 Debian 13，用户是 root）
       - name: Build ISO
-        run: build-squashfs.sh amd64 hetao
+        run: ./build-squashfs.sh amd64 hetao
 
       # 上传产物
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: gxde-amd64-hetao
-          path: gxde-amd64-hetao.iso
+          path: gxde.iso
